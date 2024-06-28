@@ -6,8 +6,10 @@ import {
   Linking,
   TouchableOpacity,
   Image,
+  TextInput,
+  Dimensions,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import {globalStyle} from '../style/style';
 import FontAwesome from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -15,6 +17,8 @@ import * as ImagePicker from 'react-native-image-picker';
 
 const BANNER_IMAGE = require('../img/logo.png');
 const HomePage = ({navigation}) => {
+  const width = Dimensions.get('window').width;
+  const [recipe, setRecipe] = useState('');
   const openImagePicker = () => {
     const options = {
       mediaType: 'photo',
@@ -47,6 +51,22 @@ const HomePage = ({navigation}) => {
         <View style={styles.logoContainer}>
           <Image style={styles.logo} source={BANNER_IMAGE} />
         </View>
+      </View>
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Enter your recipe"
+          placeholderTextColor="#1f3e5c"
+          style={{...styles.input, width: width - 50}}
+          onChangeText={e => setRecipe(e)}
+          value={recipe}
+        />
+        <TouchableOpacity
+          style={styles.search}
+          onPress={() => {
+            openImagePicker();
+          }}>
+          <FontAwesome name="search-web" color="#1e5387" size={55} />
+        </TouchableOpacity>
       </View>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -83,6 +103,32 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 10,
     padding: 10,
+  },
+  inputContainer: {
+    flex: 1,
+    // flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    color: '#1f3e5c',
+    // height: 20,
+    fontSize: 20,
+
+    width: '100%',
+    alignSelf: 'stretch',
+    // flex: 3,
+    borderColor: '#1f3e5c',
+    borderWidth: 2,
+    borderRadius: 10,
+    textAlign: 'center',
+    padding: 10,
+  },
+  search: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 70,
   },
   buttonContainer: {
     flex: 1,
